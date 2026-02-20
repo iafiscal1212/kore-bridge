@@ -45,6 +45,44 @@ class CallableLLM(LLMProvider):
         return self._fn(messages)
 
 
+class OllamaProvider(LLMProvider):
+    """Ollama provider. Local LLMs, zero API keys.
+
+    Requires Ollama running: https://ollama.com
+    Default model: llama3.2 (3B, fast, good enough for memory/identity)
+    """
+
+    def __init__(self, model: str = "llama3.2",
+                 base_url: str = "http://localhost:11434") -> None:
+        self._model = model
+        self._base_url = base_url.rstrip("/")
+
+    def complete(self, messages: list[dict[str, str]]) -> str:
+        import json
+        import urllib.request
+
+        payload = json.dumps({
+            "model": self._model,
+            "messages": messages,
+            "stream": False,
+        }).encode()
+
+        req = urllib.request.Request(
+            f"{self._base_url}/api/chat",
+            data=payload,
+            headers={"Content-Type": "application/json"},
+        )
+        with urllib.request.urlopen(req) as resp:
+            data = json.loads(resp.read())
+        return data["message"]["content"]
+
+    def summarize(self, text: str, instruction: str) -> str:
+        return self.complete([
+            {"role": "system", "content": instruction},
+            {"role": "user", "content": text},
+        ])
+
+
 class OpenAIProvider(LLMProvider):
     """OpenAI provider. Requires: pip install kore-bridge[openai]"""
 
