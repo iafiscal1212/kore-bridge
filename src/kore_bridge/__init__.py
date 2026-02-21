@@ -5,7 +5,7 @@ from kore_bridge.providers import LLMProvider, CallableLLM, OllamaProvider
 from kore_bridge.router import RouterProvider
 from kore_bridge.experiment import Experiment, ExperimentResult
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 __all__ = [
     "Bridge", "LLMProvider", "CallableLLM", "OllamaProvider",
     "RouterProvider", "Experiment", "ExperimentResult",
