@@ -4,6 +4,8 @@ LLM integration layer for [kore-mind](https://github.com/iafiscal1212/kore-mind)
 
 **Middleware cognitivo entre tu app y el LLM.** Cache, routing, rate limiting, A/B testing — todo antes de gastar tokens.
 
+Part of [**kore-stack**](https://github.com/iafiscal1212/kore-stack) — the complete cognitive middleware for LLMs. `pip install kore-stack` for the full stack, or install individually:
+
 ## Install
 
 ```bash
@@ -216,6 +218,15 @@ All new parameters have defaults that preserve v0.1 behavior:
 bridge = Bridge(mind=mind, llm=llm)
 bridge.think("Hello")
 ```
+
+## Part of kore-stack
+
+| Package | What it does |
+|---------|-------------|
+| [kore-mind](https://github.com/iafiscal1212/kore-mind) | Memory, identity, traces, cache storage |
+| **kore-bridge** (this) | LLM integration, cache logic, rate limiting, A/B testing, SC routing |
+| [sc-router](https://github.com/iafiscal1212/sc-router) | Query routing by Selector Complexity theory |
+| [**kore-stack**](https://github.com/iafiscal1212/kore-stack) | All of the above, one install: `pip install kore-stack` |
 
 ## Demo
 
