@@ -41,9 +41,13 @@ identity = bridge.reflect()
 print(identity.summary)
 ```
 
+## v0.3.2 — kore-mind v0.4.0 embeddings
+
+Now requires `kore-mind>=0.4.0` which adds persistent SQLite cache, float16 quantization, async embeddings, streaming batch, and dimension validation. See [kore-mind changelog](https://github.com/iafiscal1212/kore-mind).
+
 ## v0.3.1 — kore-mind optimized embeddings
 
-Now requires `kore-mind>=0.3.1` which includes optimized Ollama embeddings: connection reuse, LRU cache, batch embedding, and fallback warnings. See [kore-mind changelog](https://github.com/iafiscal1212/kore-mind).
+Optimized Ollama embeddings: connection reuse, LRU cache, batch embedding, and fallback warnings.
 
 ## v0.2 Features
 
