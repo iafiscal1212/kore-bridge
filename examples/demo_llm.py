@@ -32,8 +32,11 @@ def check_ollama(model="llama3.2"):
         req = urllib.request.Request("http://localhost:11434/api/tags")
         with urllib.request.urlopen(req, timeout=3) as resp:
             data = json.loads(resp.read())
-        models = [m["name"].split(":")[0] for m in data.get("models", [])]
-        if model not in models:
+        models = [m["name"] for m in data.get("models", [])]
+        # Match with or without tag (e.g. "qwen2.5" matches "qwen2.5:7b")
+        found = any(model == m or m.startswith(model + ":") or model == m.split(":")[0]
+                     for m in models)
+        if not found:
             print(f"  Model '{model}' not found. Available: {models}")
             print(f"  Run: ollama pull {model}")
             return False
