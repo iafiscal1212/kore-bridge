@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "kore-bridge"
-version = "0.2.1"
+version = "0.3.0"
 description = "LLM integration layer for kore-mind. Runtime-agnostic cognitive bridge."
 readme = "README.md"
 license = "MIT"
@@ -27,7 +27,8 @@ dependencies = [
 [project.optional-dependencies]
 openai = ["openai>=1.0"]
 anthropic = ["anthropic>=0.20"]
-all = ["openai>=1.0", "anthropic>=0.20"]
+sc = ["sc-router>=0.2.0"]
+all = ["openai>=1.0", "anthropic>=0.20", "sc-router>=0.2.0"]
 dev = ["pytest>=7.0", "ruff"]
 
 [tool.hatch.build.targets.wheel]

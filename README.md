@@ -10,6 +10,7 @@ LLM integration layer for [kore-mind](https://github.com/iafiscal1212/kore-mind)
 pip install kore-bridge                # core (zero deps beyond kore-mind)
 pip install kore-bridge[openai]        # + OpenAI
 pip install kore-bridge[anthropic]     # + Anthropic
+pip install kore-bridge[sc]            # + Selector Complexity routing
 pip install kore-bridge[all]           # everything
 ```
 
@@ -103,6 +104,44 @@ print(router.last_route)             # "quality"
 ```
 
 Summarize (used by `reflect()`) always routes to "quality".
+
+### SC Routing (Selector Complexity)
+
+Routing based on formal proof complexity theory. Not heuristics — mathematics.
+
+```bash
+pip install kore-bridge[sc]
+```
+
+```python
+from kore_bridge import SCRouterProvider, OllamaProvider
+from kore_bridge.providers import OpenAIProvider
+from sc_router import ToolCatalog, Tool
+
+catalog = ToolCatalog()
+catalog.register(Tool(
+    name="calculator",
+    description="Arithmetic calculations",
+    input_types={"expression"},
+    output_types={"number"},
+    capability_tags={"math", "calculate"},
+))
+
+router = SCRouterProvider(
+    providers={
+        "fast": OllamaProvider(model="llama3.2"),
+        "quality": OpenAIProvider(model="gpt-4o"),
+    },
+    catalog=catalog,
+)
+
+bridge = Bridge(mind=mind, llm=router)
+bridge.think("What is 2+2?")              # SC(0) → Ollama
+bridge.think("Analyze and cross-reference market data")  # SC(2+) → GPT-4
+
+print(router.last_sc_level)       # 0, 1, 2, or 3
+print(router.last_classification) # full classification evidence
+```
 
 ### A/B Testing
 
