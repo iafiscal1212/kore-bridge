@@ -41,6 +41,10 @@ identity = bridge.reflect()
 print(identity.summary)
 ```
 
+## v0.3.1 — kore-mind optimized embeddings
+
+Now requires `kore-mind>=0.3.1` which includes optimized Ollama embeddings: connection reuse, LRU cache, batch embedding, and fallback warnings. See [kore-mind changelog](https://github.com/iafiscal1212/kore-mind).
+
 ## v0.2 Features
 
 ### Smart Cache
